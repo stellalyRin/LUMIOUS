@@ -13,42 +13,25 @@ class Reflectee
 {
     static void Main(string[] args)
     {
-        Console.Write("请输入 README.md 文件的所在目录路径，例如 \"C:\\Users\\Username\\Desktop\"：");
-        string? directoryPath = Console.ReadLine();
+        var directoryPath = GetInput("请输入 README.md 文件的所在目录路径，例如 \"C:\\Users\\Username\\Desktop\"：");
+        var username = GetInput("请输入你的昵称：");
+        var slogan = GetInput("请输入你的 slogan：");
+        var briefIntro = GetInput("请输入你的简短介绍：");
+        var worldview = GetInput("请输入你的世界观：");
 
-        Console.Write("请输入你的昵称：");
-        string? username = Console.ReadLine();
-        
-        Console.Write("请输入你的 slogan：");
-        string? slogan = Console.ReadLine();
-
-        Console.Write("请输入你的简短介绍");
-        string? briefIntro = Console.ReadLine();
-
-        Console.Write("请输入你的世界观");
-        string? worldview = Console.ReadLine();
-
-        Console.Write("请输入你的设备列表（用逗号分隔）：");
-        string? devicesInput = Console.ReadLine();
-        List<string> devices = devicesInput?.Split(',').Select(d => d.Trim()).ToList() ?? new List<string>();
+        var devices = GetInputList("请输入你的设备列表（用逗号分隔）：");
         var devicesItems = devices.Select(d => $"- {d}").ToList();
         string devicesSection = string.Join("\n", devicesItems);
 
-        Console.Write("请输入你的 IDE 列表（用逗号分隔）：");
-        string? idesInput = Console.ReadLine();
-        List<string> ides = idesInput?.Split(',').Select(i => i.Trim()).ToList() ?? new List<string>();
+        var ides = GetInputList("请输入你的 IDE 列表（用逗号分隔）：");
         var idesItems = ides.Select(i => $"- {i}").ToList();
         string idesSection = string.Join("\n", idesItems);
 
-        Console.Write("请输入你的朋友列表（用逗号分隔）：");
-        string? friendsInput = Console.ReadLine();
-        List<string> friends = friendsInput?.Split(',').Select(f => f.Trim()).ToList() ?? new List<string>();
+        var friends = GetInputList("请输入你的朋友列表（用逗号分隔）：");
         var friendsItems = friends.Select(f => $"- {f}").ToList();
         string friendsSection = string.Join("\n", friendsItems);
 
-        Console.Write("请输入你的赞助者列表（用逗号分隔）：");
-        string? sponsorsInput = Console.ReadLine();
-        List<string> sponsors = sponsorsInput?.Split(',').Select(s => s.Trim()).ToList() ?? new List<string>();
+        var sponsors = GetInputList("请输入你的赞助者列表（用逗号分隔）：");
         var sponsorsItems = sponsors.Select(s => $"- {s}").ToList();
         string sponsorsSection = string.Join("\n", sponsorsItems);
 
@@ -71,5 +54,18 @@ class Reflectee
             Console.WriteLine($"写入文件时发生错误：{ex.Message}");
         }
 
+    }
+
+    private static string? GetInput(string prompt)
+    {
+        Console.Write(prompt);
+        return Console.ReadLine() ?? string.Empty;
+    }
+
+    private static List<string> GetInputList(string prompt)
+    {
+        Console.Write(prompt);
+        string? input = Console.ReadLine();
+        return input?.Split(',').Select(i => i.Trim()).ToList() ?? new List<string>();
     }
 }
